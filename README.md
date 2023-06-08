@@ -5,9 +5,9 @@ Create a new Google Apps Script project (https://script.google.com/home) and pas
 
 Go to Settings > Script Properties and define these properties:
 
-gymIDs = ["gymid1","gymid2"]
+gymIDs = ["gymid1","gymid2"] (you can find your gym id here: https://api.toplogger.nu/v1/gyms.json)
 
-userID = 0000000000
+userID = 0000000000 (you can find your user id by logging to top logger, visiting the dashboard and looking at the URL. It will end with you user id: https://app.toplogger.nu/en-us/gym/dashboard/boulders?uid=0000000000)
 
 fileName = "TopLoggerClimbs" (optional, will be TopLoggerClimbs by default)
 
