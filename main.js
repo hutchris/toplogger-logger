@@ -1,12 +1,3 @@
-//Visit this url and search for your gym ID(s) https://api.toplogger.nu/v1/gyms.json
-//Put the gym ID(s) in the gymIDs variable. For multiple: const gymIDs = ["1","2"]
-const gymIDs = ["0"]
-//Sign in to toplogger.nu and go to your dashboard. Your user ID is in the URL as uid e.g. https://app.toplogger.nu/en-us/uprising/dashboard/boulders?uid=0000000000
-//Put the user id in the userID variable:
-const userID = "0000000000"
-const fileName = "TopLoggerClimbs"
-
-
 function getAllClimbs(gymIDsArray,getAll=false) {
   let allClimbsJsonObj = [];
   if (getAll) {
@@ -66,12 +57,20 @@ function updateHeaders(tlHeadersArray,ssHeadersArray) {
 }
 
 function myFunction() {
-  if (gymIDs == ["0"]) {
-    throw new Error("Please fill in the gymIDs variable at the top of the script")
+  var scriptProperties = PropertiesService.getScriptProperties()
+  var gymIDs = scriptProperties.getProperty("gymIDs")
+  var userID = scriptProperties.getProperty("userID")
+  var fileName = scriptProperties.getProperty("fileName")
+  if (gymIDs == null) {
+    throw new Error('Please create a script property for gymIDs e.g. ["1"] or ["1","2"]. In Apps Script go Settings > Script Properties. You can find your gyms gymID at this url: https://api.toplogger.nu/v1/gyms.json')
   }
-  if (userID == "0000000000") {
-    throw new Error("Please fill in the userID variable at the top of the script")
+  if (userID == null) {
+    throw new Error("Please create a script property for userID e.g. 0000000000. In Apps Script go Settings > Script Properties. Sign in to toplogger.nu and go to your dashboard. Your user ID is in the URL as uid e.g. https://app.toplogger.nu/en-us/uprising/dashboard/boulders?uid=0000000000")
   }
+  if (fileName == null) {
+    fileName = "TopLoggerClimbs"
+  }
+  gymIDs = JSON.parse(gymIDs)
   var files = DriveApp.searchFiles('title contains "' + fileName + '"')
   //open or create
   if (files.hasNext()) {
